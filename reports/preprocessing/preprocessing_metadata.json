@@ -1,0 +1,288 @@
+{
+  "raw_sha256": "30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933",
+  "split_manifest_sha256": "860e1578ed82fd9cb87aeed49a64c621c401d4f41376f1544f72cea93389cdd1",
+  "id_population_sha256": "00378ae85b56809ee566b3c71ef8d69f82808234ae8109d4771392d23543ef9e",
+  "expected_row_count": 30000,
+  "target_column": "default payment next month",
+  "predictor_column_order": [
+    "AGE",
+    "BILL_AMT1",
+    "BILL_AMT2",
+    "BILL_AMT3",
+    "BILL_AMT4",
+    "BILL_AMT5",
+    "BILL_AMT6",
+    "EDUCATION",
+    "LIMIT_BAL",
+    "MARRIAGE",
+    "PAY_0",
+    "PAY_2",
+    "PAY_3",
+    "PAY_4",
+    "PAY_5",
+    "PAY_6",
+    "PAY_AMT1",
+    "PAY_AMT2",
+    "PAY_AMT3",
+    "PAY_AMT4",
+    "PAY_AMT5",
+    "PAY_AMT6",
+    "SEX"
+  ],
+  "stable_group_id_method": "MD5(str(vals).join('|').encode('utf-8'))",
+  "stable_group_id_version": "1",
+  "creation_timestamp": "2026-07-20T20:13:12.405219",
+  "python_version": "3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]",
+  "pandas_version": "2.3.3",
+  "numpy_version": "2.3.3",
+  "scikit_learn_version": "1.8.0",
+  "split_seeds": {
+    "test": 42,
+    "validation": 43
+  },
+  "selected_outer_test_fold_index": 0,
+  "selected_inner_validation_fold_index": 0,
+  "temporal_chronology": {
+    "0": {
+      "month": "April",
+      "status": "PAY_6",
+      "bill": "BILL_AMT6",
+      "payment": "PAY_AMT6"
+    },
+    "1": {
+      "month": "May",
+      "status": "PAY_5",
+      "bill": "BILL_AMT5",
+      "payment": "PAY_AMT5"
+    },
+    "2": {
+      "month": "June",
+      "status": "PAY_4",
+      "bill": "BILL_AMT4",
+      "payment": "PAY_AMT4"
+    },
+    "3": {
+      "month": "July",
+      "status": "PAY_3",
+      "bill": "BILL_AMT3",
+      "payment": "PAY_AMT3"
+    },
+    "4": {
+      "month": "August",
+      "status": "PAY_2",
+      "bill": "BILL_AMT2",
+      "payment": "PAY_AMT2"
+    },
+    "5": {
+      "month": "September",
+      "status": "PAY_0",
+      "bill": "BILL_AMT1",
+      "payment": "PAY_AMT1"
+    }
+  },
+  "temporal_channel_order": "status, bill, payment",
+  "static_source_columns": [
+    "LIMIT_BAL",
+    "AGE",
+    "SEX",
+    "EDUCATION",
+    "MARRIAGE"
+  ],
+  "tabular_source_columns": [
+    "LIMIT_BAL",
+    "AGE",
+    "BILL_AMT6",
+    "BILL_AMT5",
+    "BILL_AMT4",
+    "BILL_AMT3",
+    "BILL_AMT2",
+    "BILL_AMT1",
+    "PAY_AMT6",
+    "PAY_AMT5",
+    "PAY_AMT4",
+    "PAY_AMT3",
+    "PAY_AMT2",
+    "PAY_AMT1",
+    "SEX",
+    "EDUCATION",
+    "MARRIAGE",
+    "PAY_6",
+    "PAY_5",
+    "PAY_4",
+    "PAY_3",
+    "PAY_2",
+    "PAY_0"
+  ],
+  "final_output_feature_names": {
+    "tabular": [
+      "LIMIT_BAL",
+      "AGE",
+      "BILL_AMT6",
+      "BILL_AMT5",
+      "BILL_AMT4",
+      "BILL_AMT3",
+      "BILL_AMT2",
+      "BILL_AMT1",
+      "PAY_AMT6",
+      "PAY_AMT5",
+      "PAY_AMT4",
+      "PAY_AMT3",
+      "PAY_AMT2",
+      "PAY_AMT1",
+      "SEX_1",
+      "SEX_2",
+      "EDUCATION_0",
+      "EDUCATION_1",
+      "EDUCATION_2",
+      "EDUCATION_3",
+      "EDUCATION_4",
+      "EDUCATION_5",
+      "EDUCATION_6",
+      "MARRIAGE_0",
+      "MARRIAGE_1",
+      "MARRIAGE_2",
+      "MARRIAGE_3",
+      "PAY_6_-2",
+      "PAY_6_-1",
+      "PAY_6_0",
+      "PAY_6_2",
+      "PAY_6_3",
+      "PAY_6_4",
+      "PAY_6_5",
+      "PAY_6_6",
+      "PAY_6_7",
+      "PAY_6_8",
+      "PAY_5_-2",
+      "PAY_5_-1",
+      "PAY_5_0",
+      "PAY_5_2",
+      "PAY_5_3",
+      "PAY_5_4",
+      "PAY_5_5",
+      "PAY_5_6",
+      "PAY_5_7",
+      "PAY_5_8",
+      "PAY_4_-2",
+      "PAY_4_-1",
+      "PAY_4_0",
+      "PAY_4_1",
+      "PAY_4_2",
+      "PAY_4_3",
+      "PAY_4_4",
+      "PAY_4_5",
+      "PAY_4_6",
+      "PAY_4_7",
+      "PAY_4_8",
+      "PAY_3_-2",
+      "PAY_3_-1",
+      "PAY_3_0",
+      "PAY_3_1",
+      "PAY_3_2",
+      "PAY_3_3",
+      "PAY_3_4",
+      "PAY_3_5",
+      "PAY_3_6",
+      "PAY_3_7",
+      "PAY_3_8",
+      "PAY_2_-2",
+      "PAY_2_-1",
+      "PAY_2_0",
+      "PAY_2_1",
+      "PAY_2_2",
+      "PAY_2_3",
+      "PAY_2_4",
+      "PAY_2_5",
+      "PAY_2_6",
+      "PAY_2_7",
+      "PAY_2_8",
+      "PAY_0_-2",
+      "PAY_0_-1",
+      "PAY_0_0",
+      "PAY_0_1",
+      "PAY_0_2",
+      "PAY_0_3",
+      "PAY_0_4",
+      "PAY_0_5",
+      "PAY_0_6",
+      "PAY_0_7",
+      "PAY_0_8"
+    ],
+    "static": [
+      "LIMIT_BAL",
+      "AGE",
+      "SEX_1",
+      "SEX_2",
+      "EDUCATION_0",
+      "EDUCATION_1",
+      "EDUCATION_2",
+      "EDUCATION_3",
+      "EDUCATION_4",
+      "EDUCATION_5",
+      "EDUCATION_6",
+      "MARRIAGE_0",
+      "MARRIAGE_1",
+      "MARRIAGE_2",
+      "MARRIAGE_3"
+    ]
+  },
+  "tabular_dimensions": 91,
+  "static_dimensions": 15,
+  "output_shapes": {
+    "train": {
+      "tabular": [
+        19199,
+        91
+      ],
+      "static": [
+        19199,
+        15
+      ],
+      "temporal": [
+        19199,
+        6,
+        3
+      ]
+    },
+    "validation": {
+      "tabular": [
+        4801,
+        91
+      ],
+      "static": [
+        4801,
+        15
+      ],
+      "temporal": [
+        4801,
+        6,
+        3
+      ]
+    },
+    "test": {
+      "tabular": [
+        6000,
+        91
+      ],
+      "static": [
+        6000,
+        15
+      ],
+      "temporal": [
+        6000,
+        6,
+        3
+      ]
+    }
+  },
+  "dtypes": "float32",
+  "target_dtypes": "int64",
+  "class_counts_train": {
+    "0": 14952,
+    "1": 4247
+  },
+  "class_weights_train": {
+    "0": 0.6420211342964152,
+    "1": 2.260301389215917
+  },
+  "transformer_fitting_scope": "train_only"
+}

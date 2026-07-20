@@ -1,0 +1,2 @@
+total_rows,unique_predictor_groups,repeated_predictor_groups,rows_in_repeated_predictor_groups,conflicting_target_predictor_groups,rows_in_conflicting_target_groups,maximum_predictor_group_size
+30000,29944,52,108,21,46,3

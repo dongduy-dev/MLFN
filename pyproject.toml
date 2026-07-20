@@ -7,7 +7,13 @@ name = "credit-default"
 version = "0.1.0"
 description = "Credit Card Default Prediction — UCI Dataset (ML Final Project)"
 requires-python = ">=3.10"
-
+dependencies = [
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "matplotlib>=3.7.0",
+    "scikit-learn>=1.3.0",
+    "joblib>=1.3.0"
+]
 [tool.setuptools.packages.find]
 where = ["src"]
 

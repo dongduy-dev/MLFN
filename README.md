@@ -2,7 +2,7 @@
 
 **Course**: Machine Learning Final Project  
 **Dataset**: [UCI — Default of Credit Card Clients](https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients)  
-**Current Checkpoint**: **Accelerated Phase 1 — Bill/Payment Relationship EDA**
+**Current Checkpoint**: **Accelerated Phase 2 — Leakage-Safe Split and Preprocessing**
 
 ---
 
@@ -15,7 +15,7 @@ using the UCI "Default of Credit Card Clients" dataset (30,000 records,
 Future checkpoints will explore traditional ML baselines (Logistic Regression,
 Random Forest, XGBoost) and deep-learning architectures (GRU, LSTM, Conv1D).
 
-> **EDA is complete after this phase. Leakage-safe dataset splitting and preprocessing are next. No model training has occurred.**
+> **EDA is complete. Train/validation/test membership is frozen. Preprocessors are fitted only on training rows. Final test data has not been used for model selection or evaluation. No model has been trained. Accelerated Phase 3 will train traditional baselines, GRU/LSTM, and Conv1D configurations using train and validation only.**
 
 ---
 

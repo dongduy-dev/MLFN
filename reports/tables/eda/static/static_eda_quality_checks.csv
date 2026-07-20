@@ -1,0 +1,16 @@
+check_name,passed,detail
+target_counts_sum_to_dataset_size,True,"target count=30000, dataset n=30000"
+cat_counts_sum_SEX,True,"sum=30000, expected=30000"
+cat_counts_sum_EDUCATION,True,"sum=30000, expected=30000"
+cat_counts_sum_MARRIAGE,True,"sum=30000, expected=30000"
+default_plus_nonfault_eq_total_SEX,True,all rows ok
+default_plus_nonfault_eq_total_EDUCATION,True,all rows ok
+default_plus_nonfault_eq_total_MARRIAGE,True,all rows ok
+default_rates_in_range_SEX,True,"min=0.2078, max=0.2417"
+default_rates_in_range_EDUCATION,True,"min=0.0000, max=0.2516"
+default_rates_in_range_MARRIAGE,True,"min=0.0926, max=0.2601"
+numeric_grouped_counts_LIMIT_BAL,True,"sum=30000, expected=30000"
+numeric_grouped_counts_AGE,True,"sum=30000, expected=30000"
+raw_file_sha256_unchanged,True,"expected=30c6be3abd8dcfd3..., actual=30c6be3abd8dcfd3..."
+raw_rows_not_modified_shape,True,"shape=(30000, 25)"
+raw_rows_not_modified_dtypes,True,dtypes match

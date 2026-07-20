@@ -2,7 +2,7 @@
 
 **Course**: Machine Learning Final Project  
 **Dataset**: [UCI — Default of Credit Card Clients](https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients)  
-**Current Checkpoint**: **1.1 — Project Foundation & Raw Dataset Audit (corrected)**
+**Current Checkpoint**: **2A — Descriptive EDA (Target & Static Features)**
 
 ---
 
@@ -15,9 +15,8 @@ using the UCI "Default of Credit Card Clients" dataset (30,000 records,
 Future checkpoints will explore traditional ML baselines (Logistic Regression,
 Random Forest, XGBoost) and deep-learning architectures (GRU, LSTM, Conv1D).
 
-> **No modelling, preprocessing, data splitting, or EDA visualisation
-> has been performed yet. This checkpoint covers project setup and raw-data
-> auditing only.**
+> **No preprocessing, data splitting, feature selection, or model training
+> has been performed. Checkpoint 2A is descriptive EDA only.**
 
 ---
 
@@ -43,19 +42,31 @@ MLFN/
 │   └── raw/                              # immutable raw dataset
 │       └── default of credit card clients.xls
 ├── reports/
-│   └── tables/                           # machine-readable audit outputs (CSV)
+│   ├── eda_static_findings.md            # CP2A human-readable findings
+│   ├── figures/
+│   │   └── eda/static/                  # CP2A PNG figures (11 files)
+│   └── tables/
+│       ├── eda/static/                  # CP2A CSV tables (6 files)
+│       └── *.csv                        # CP1 audit tables
 ├── scripts/
 │   ├── __init__.py
-│   └── audit_dataset.py                  # CP1 dataset audit
+│   ├── audit_dataset.py                 # CP1 dataset audit
+│   └── run_eda_static.py               # CP2A static feature EDA
 ├── src/
-│   └── credit_default/                   # main project package
+│   └── credit_default/                  # main project package
 │       ├── __init__.py
-│       └── data_loader.py               # reusable data loading module
+│       ├── data_loader.py              # reusable data loading module
+│       └── eda/                        # EDA sub-package
+│           ├── __init__.py
+│           ├── figures.py              # figure generation
+│           ├── findings.py             # findings markdown generation
+│           └── static_features.py     # EDA calculations
 ├── tests/
 │   ├── __init__.py
-│   └── test_data_loader.py              # data loader & schema tests (15 tests)
+│   ├── test_data_loader.py             # CP1 tests
+│   └── test_eda_static.py             # CP2A tests
 ├── .gitignore
-├── pyproject.toml                        # editable install configuration
+├── pyproject.toml
 ├── requirements.txt
 └── README.md
 ```
@@ -91,8 +102,16 @@ python -m pip install -e .
 python -m scripts.audit_dataset
 ```
 
-This will print a detailed audit report to the console and save
-machine-readable CSV files under `reports/tables/`.
+### Run static feature EDA (Checkpoint 2A)
+
+```bash
+python -m scripts.run_eda_static
+```
+
+Outputs:
+- Tables: `reports/tables/eda/static/*.csv` (6 files)
+- Figures: `reports/figures/eda/static/*.png` (11 files)
+- Findings: `reports/eda_static_findings.md`
 
 ### Run tests
 
@@ -108,7 +127,8 @@ python -m pytest tests/ -v
 |-----------|-------------|--------|
 | 1 | Project Foundation & Raw Dataset Audit | ✅ Complete |
 | 1.1 | Correction: documentation accuracy, package layout | ✅ Complete |
-| 2 | EDA & Visualisation | ⬜ Not started |
+| 2A | Descriptive EDA — Target & Static Features | ✅ Complete |
+| 2B | Descriptive EDA — Temporal Features (PAY_x, BILL_AMTx, PAY_AMTx) | ⬜ Not started |
 | 3 | Preprocessing & Feature Engineering | ⬜ Not started |
 | 4 | Traditional ML Baselines | ⬜ Not started |
 | 5 | Deep Learning (GRU / LSTM / Conv1D) | ⬜ Not started |
@@ -120,23 +140,19 @@ python -m pytest tests/ -v
 
 ### Duplicate feature vectors (Checkpoint 3)
 
-The raw dataset contains 35 rows (70 rows in 35 pairs) that have identical
-feature values when the ID column is excluded.  Since each pair has distinct
-IDs, they are preserved in the raw data.
-
-**Checkpoint 3 must investigate** whether these identical feature vectors
-(excluding both ID and the target column) should be kept, merged, or handled
-specially.  In particular, identical feature groups must **not be allowed to
-cross train, validation, and test boundaries**, as this would create data
-leakage.
+Checkpoint 1 identified 35 duplicate rows when ID was excluded from the
+comparison. Because the target was still included, this does not yet establish
+the number of predictor-only duplicate groups. Before splitting, Checkpoint 3
+will group rows using all predictive features while excluding both ID and the
+target, identify groups with consistent or conflicting targets, and prevent
+identical predictor groups from crossing dataset boundaries.
 
 ### Undocumented categorical values
 
-Values `0` and `-2` in repayment status columns (PAY_0, PAY_2–PAY_6), as
-well as EDUCATION values `0`, `5`, `6` and MARRIAGE value `0`, are present
-in the raw dataset but are **not explicitly defined** by the official UCI
-documentation.  They have not been removed or recoded; any future
-preprocessing must first decide how to handle them.
+EDUCATION values `0`, `5`, `6` and MARRIAGE value `0` are present in the raw
+dataset but are **not explicitly defined** by the official UCI documentation.
+They have not been removed or recoded; any future preprocessing must decide
+how to handle them.
 
 ---
 

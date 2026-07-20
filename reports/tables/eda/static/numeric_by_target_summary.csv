@@ -1,0 +1,5 @@
+feature,target_value,target_label,count,mean,std,min,q25,median,q75,max,iqr,potential_extreme_note
+LIMIT_BAL,0,no_default,23364,178099.7261,131628.3597,10000.0,70000.0,150000.0,250000.0,1000000.0,180000.0,"3 values outside 3×IQR fences [-470000.0, 790000.0]; not removed"
+LIMIT_BAL,1,default,6636,130109.6564,115378.5406,10000.0,50000.0,90000.0,200000.0,740000.0,150000.0,"4 values outside 3×IQR fences [-400000.0, 650000.0]; not removed"
+AGE,0,no_default,23364,35.4173,9.0774,21.0,28.0,34.0,41.0,79.0,13.0,"0 values outside 3×IQR fences [-11.0, 80.0]; not removed"
+AGE,1,default,6636,35.7257,9.6934,21.0,28.0,34.0,42.0,75.0,14.0,"0 values outside 3×IQR fences [-14.0, 84.0]; not removed"

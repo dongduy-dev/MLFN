@@ -1,0 +1,14 @@
+feature,raw_value,total_count,default_count,non_default_count,default_rate,population_percentage,documentation_status,small_sample_warning
+SEX,1,11888,2873,9015,0.241672,39.6267,documented,False
+SEX,2,18112,3763,14349,0.207763,60.3733,documented,False
+EDUCATION,0,14,0,14,0.0,0.0467,not_explicitly_defined_in_uci_docs,True
+EDUCATION,1,10585,2036,8549,0.192348,35.2833,documented,False
+EDUCATION,2,14030,3330,10700,0.237349,46.7667,documented,False
+EDUCATION,3,4917,1237,3680,0.251576,16.39,documented,False
+EDUCATION,4,123,7,116,0.056911,0.41,documented,True
+EDUCATION,5,280,18,262,0.064286,0.9333,not_explicitly_defined_in_uci_docs,False
+EDUCATION,6,51,8,43,0.156863,0.17,not_explicitly_defined_in_uci_docs,True
+MARRIAGE,0,54,5,49,0.092593,0.18,not_explicitly_defined_in_uci_docs,True
+MARRIAGE,1,13659,3206,10453,0.234717,45.53,documented,False
+MARRIAGE,2,15964,3341,12623,0.209283,53.2133,documented,False
+MARRIAGE,3,323,84,239,0.260062,1.0767,documented,False

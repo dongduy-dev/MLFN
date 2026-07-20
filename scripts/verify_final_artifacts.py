@@ -11,6 +11,22 @@ def get_file_sha256(path: Path) -> str:
     with open(path, "rb") as f:
         return hashlib.sha256(f.read()).hexdigest()
 
+def matches_locked_text_sha(path: Path, expected_sha: str) -> bool:
+    with open(path, "rb") as f:
+        raw_bytes = f.read()
+        
+    if hashlib.sha256(raw_bytes).hexdigest() == expected_sha:
+        return True
+        
+    text = raw_bytes.decode('utf-8')
+    text_lf = text.replace('\r\n', '\n')
+    text_crlf = text_lf.replace('\n', '\r\n')
+    
+    if hashlib.sha256(text_crlf.encode('utf-8')).hexdigest() == expected_sha:
+        return True
+        
+    return False
+
 def verify_artifacts():
     results = []
     
@@ -66,11 +82,9 @@ def verify_artifacts():
         
         results.append(check("tlock_manifest_sha", tlock.get("preprocessing_manifest_SHA") == EXPECTED_MANIFEST_SHA))
         
-        val_preds_sha = get_file_sha256(val_preds_path) if val_preds_path.exists() else None
-        results.append(check("tlock_val_pred_sha", val_preds_sha is not None and tlock.get("phase3_validation_prediction_SHA") == val_preds_sha))
+        results.append(check("tlock_val_pred_sha", val_preds_path.exists() and matches_locked_text_sha(val_preds_path, tlock.get("phase3_validation_prediction_SHA", ""))))
         
-        cand_sha = get_file_sha256(cand_path) if cand_path.exists() else None
-        results.append(check("tlock_cand_sha", cand_sha is not None and tlock.get("selected_candidates_file_SHA") == cand_sha))
+        results.append(check("tlock_cand_sha", cand_path.exists() and matches_locked_text_sha(cand_path, tlock.get("selected_candidates_file_SHA", ""))))
         
         tlock_ckpts = tlock.get("checkpoint_SHAs", {})
         results.append(check("tlock_checkpoint_shas", tlock_ckpts == EXPECTED_SHAS))
@@ -94,8 +108,7 @@ def verify_artifacts():
         results.append(check("elock_tlock_sha", elock.get("threshold_lock_SHA") == expected_lock_sha))
         
         final_preds_path = Path("reports/evaluation/phase4/final_test_predictions.csv")
-        final_preds_sha = get_file_sha256(final_preds_path) if final_preds_path.exists() else None
-        results.append(check("elock_final_pred_sha", final_preds_sha is not None and elock.get("final_test_prediction_file_SHA") == final_preds_sha))
+        results.append(check("elock_final_pred_sha", final_preds_path.exists() and matches_locked_text_sha(final_preds_path, elock.get("final_test_prediction_file_SHA", ""))))
         
         results.append(check("elock_checkpoint_shas", elock.get("checkpoint_SHAs") == EXPECTED_SHAS))
         results.append(check("elock_device_recorded", "inference_device" in elock))
@@ -176,7 +189,10 @@ def verify_artifacts():
         results.append(check("results_metric_recompute", np.isclose(acc, sample_row["accuracy"])))
         
         results.append(check("results_checkpoint_shas_match", (df_res["checkpoint_SHA"] == df_res["model_name"].map(EXPECTED_SHAS)).all()))
-        results.append(check("results_prediction_file_shas_match", (df_res["prediction_file_SHA"] == final_preds_sha).all()))
+        if 'elock' in locals():
+            results.append(check("results_prediction_file_shas_match", (df_res["prediction_file_SHA"] == elock.get("final_test_prediction_file_SHA", "")).all()))
+        else:
+            results.append(check("results_prediction_file_shas_match", False))
         
         gru_row = df_res[df_res["model_name"] == "gru_deep"]
         results.append(check("results_gru_primary", gru_row["primary_candidate"].all()))

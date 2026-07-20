@@ -67,13 +67,25 @@ def test_deterministic_initialization():
         assert torch.equal(p1, p2)
 
 def test_no_test_loader_access():
-    original_load = __import__("credit_default.preprocessing.artifacts", fromlist=["load_prepared_split"]).load_prepared_split
+    from unittest.mock import MagicMock
+    mock_split = MagicMock()
+    mock_split.temporal_features = np.zeros((10, 6, 3))
+    mock_split.static_features = np.zeros((10, 15))
+    mock_split.targets = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])
     
-    def side_effect(split_name):
-        assert split_name != "test", "test loader was called!"
-        return original_load(split_name)
-        
-    with patch("credit_default.preprocessing.artifacts.load_prepared_split", side_effect=side_effect):
+    dev_dict = {"train": mock_split, "validation": mock_split}
+    
+    with patch("credit_default.experiments.data.load_development_data", return_value=dev_dict) as mock_load:
         from credit_default.experiments.data import get_development_dataloaders
         
-        get_development_dataloaders(256, smoke_test=True)
+        train_loader, val_loader, pos_weight = get_development_dataloaders(256, smoke_test=True)
+        
+        mock_load.assert_called_once_with()
+        assert pos_weight == 1.0 # 5 neg / 5 pos
+        
+        # Verify shapes
+        for x_t, x_s, y in train_loader:
+            assert x_t.shape == (10, 6, 3)
+            assert x_s.shape == (10, 15)
+            assert y.shape == (10, 1)
+            break

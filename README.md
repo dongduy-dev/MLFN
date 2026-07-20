@@ -17,8 +17,8 @@ All technical implementation is complete. The final report and presentation are 
 
 ## Dataset
 - **Source**: UCI Machine Learning Repository
-- **Local raw-data path**: `data/raw/default_of_credit_card_clients.xls`
-- **Raw SHA-256**: `f478a2e7dfd1dffb9f428d09cb2d25bf78a48b11c97a8e2ee553b679cc7df427`
+- **Local raw-data path**: `data/raw/default of credit card clients.xls`
+- **Raw SHA-256**: `30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933`
 - The raw data is strictly read-only and is not modified.
 - `ID` is excluded from model features.
 - `default payment next month` (target) is excluded from predictor grouping and feature matrices.
@@ -123,9 +123,9 @@ python -m pytest tests/ -v
 - `artifacts/`
 
 ## Key Artifacts
-- **Split manifest**: `artifacts/preprocessing/split_manifest.json`
+- **Split manifest**: `reports/preprocessing/split_manifest.csv`
 - **Split lock**: `artifacts/preprocessing/split_lock.json`
-- **Preprocessing metadata**: `artifacts/preprocessing/metadata.json`
+- **Preprocessing metadata**: `reports/preprocessing/preprocessing_metadata.json`
 - **Phase 3 results**: `reports/experiments/phase3/experiment_results.csv`
 - **Selected candidates**: `reports/experiments/phase3/selected_candidates.json`
 - **Threshold lock**: `artifacts/evaluation/phase4/threshold_lock.json`

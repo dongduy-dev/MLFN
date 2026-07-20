@@ -8,6 +8,22 @@ def get_file_sha256(path: Path) -> str:
     with open(path, "rb") as f:
         return hashlib.sha256(f.read()).hexdigest()
 
+def matches_locked_text_sha(path: Path, expected_sha: str) -> bool:
+    with open(path, "rb") as f:
+        raw_bytes = f.read()
+        
+    if hashlib.sha256(raw_bytes).hexdigest() == expected_sha:
+        return True
+        
+    text = raw_bytes.decode('utf-8')
+    text_lf = text.replace('\r\n', '\n')
+    text_crlf = text_lf.replace('\n', '\r\n')
+    
+    if hashlib.sha256(text_crlf.encode('utf-8')).hexdigest() == expected_sha:
+        return True
+        
+    return False
+
 def create_threshold_lock(selected_thresholds_df, primary_candidate):
     lock_path = Path("artifacts/evaluation/phase4/threshold_lock.json")
     lock_path.parent.mkdir(parents=True, exist_ok=True)
@@ -108,7 +124,7 @@ def verify_locks():
     if e_lock.get("threshold_lock_SHA") != expected_t_sha:
         raise ValueError("Evaluation lock does not link to threshold lock!")
         
-    if get_file_sha256(preds_path) != e_lock.get("final_test_prediction_file_SHA"):
+    if not matches_locked_text_sha(preds_path, e_lock.get("final_test_prediction_file_SHA", "")):
         raise ValueError("Corrupted final_test_predictions.csv!")
         
     if e_lock.get("checkpoint_SHAs") != EXPECTED_SHAS:

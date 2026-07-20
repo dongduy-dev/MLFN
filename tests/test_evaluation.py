@@ -88,3 +88,33 @@ def test_verify_locks_corrupt_threshold_lock():
             ]
             with pytest.raises(ValueError, match="Corrupted threshold_lock.json"):
                 verify_locks()
+
+def test_matches_locked_text_sha():
+    from credit_default.evaluation.locking import matches_locked_text_sha
+    import hashlib
+    import tempfile
+    from pathlib import Path
+    
+    with tempfile.NamedTemporaryFile("wb", delete=False) as f:
+        # Write CRLF file
+        f.write(b"line1\r\nline2\r\n")
+        path = Path(f.name)
+        
+    expected_sha = hashlib.sha256(b"line1\r\nline2\r\n").hexdigest()
+    
+    # Should match directly
+    assert matches_locked_text_sha(path, expected_sha)
+    
+    # Rewrite as LF
+    with open(path, "wb") as f:
+        f.write(b"line1\nline2\n")
+        
+    # Should still match because matches_locked_text_sha converts to CRLF and hashes
+    assert matches_locked_text_sha(path, expected_sha)
+    
+    # Change content
+    with open(path, "wb") as f:
+        f.write(b"line1\nline3\n")
+        
+    assert not matches_locked_text_sha(path, expected_sha)
+    path.unlink()

@@ -1,238 +1,149 @@
 # Credit Card Default Prediction
 
-**Course**: Machine Learning Final Project  
-**Dataset**: [UCI — Default of Credit Card Clients](https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients)  
-**Current Checkpoint**: **Accelerated Phase 2 — Leakage-Safe Split and Preprocessing**
+## Project Overview
+This is a university machine-learning final project focused on predicting credit card defaults using the UCI Default of Credit Card Clients dataset. The dataset contains 30,000 observations with a binary prediction target and consists of tabular features along with a six-month ordered history of repayment statuses, bill amounts, and payment amounts.
 
----
+## Final Project Status
+All technical implementation is complete. The final report and presentation are next. No post-test tuning occurred.
 
-## Project Purpose
+## Scientific Workflow
+1. Immutable raw-data audit.
+2. Static and temporal EDA.
+3. Predictor-group-aware train/validation/test split.
+4. Training-only preprocessing.
+5. Traditional and neural development experiments.
+6. Validation-only candidate and threshold selection.
+7. One-time frozen-test evaluation.
 
-Predict whether a credit card client will default on their next payment,
-using the UCI "Default of Credit Card Clients" dataset (30,000 records,
-23 features, 1 binary target).
+## Dataset
+- **Source**: UCI Machine Learning Repository
+- **Local raw-data path**: `data/raw/default_of_credit_card_clients.xls`
+- **Raw SHA-256**: `f478a2e7dfd1dffb9f428d09cb2d25bf78a48b11c97a8e2ee553b679cc7df427`
+- The raw data is strictly read-only and is not modified.
+- `ID` is excluded from model features.
+- `default payment next month` (target) is excluded from predictor grouping and feature matrices.
 
-Future checkpoints will explore traditional ML baselines (Logistic Regression,
-Random Forest, XGBoost) and deep-learning architectures (GRU, LSTM, Conv1D).
+## Frozen Splits
+| Split | Rows | Non-default | Default |
+| --- | --- | --- | --- |
+| Train | 19,199 | 14,952 | 4,247 |
+| Validation | 4,801 | 3,739 | 1,062 |
+| Test | 6,000 | 4,673 | 1,327 |
 
-### Current Phase
-Accelerated Phase 4 — Frozen-Test Evaluation
+Identical predictor vectors are grouped and never cross partitions, preventing information leakage. The test set is explicitly isolated and excluded from model selection and threshold selection.
 
-### State
-- EDA, splitting, preprocessing, and development experiments are complete;
-- thresholds and the primary candidate were selected using validation only;
-- the three family candidates were evaluated once on the frozen test split;
-- no post-test tuning occurred;
-- next phase creates the final report, presentation, reproducibility package, and defence material.
+## Representations
 
----
+**Tabular:**
+- Shape: 91 features.
+- Used by traditional baselines: Logistic Regression and Gradient Boosting.
 
-## Dataset Source
+**Static:**
+- Shape: 15 features.
 
-| Property | Value |
-|----------|-------|
-| Name | Default of Credit Card Clients |
-| Provider | UCI Machine Learning Repository |
-| URL | https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients |
-| Records | 30,000 |
-| Features | 23 + 1 ID + 1 Target |
-| Format | Excel 97-2003 (`.xls`) |
-| File | `data/raw/default of credit card clients.xls` |
+**Temporal:**
+- Shape: 6 timesteps × 3 channels.
+- Timeline: April 2005 through September 2005.
+- Channels: repayment status, bill amount, payment amount.
 
----
+Neural models (GRU, LSTM, Conv1D) use temporal + static inputs via a multi-branch fusion architecture.
 
-## Project Structure
+## Models Evaluated
 
-```
-MLFN/
-├── data/
-│   └── raw/                              # immutable raw dataset
-│       └── default of credit card clients.xls
-├── reports/
-│   ├── eda_static_findings.md            # CP2A human-readable findings
-│   ├── eda_repayment_status_findings.md  # CP2B1 human-readable findings
-│   ├── eda_bill_amount_findings.md       # CP2B2A human-readable findings
-│   ├── eda_payment_amount_findings.md    # CP2B2B1 human-readable findings
-│   ├── eda_bill_payment_relationship_findings.md # Phase 1 relationship findings
-│   ├── figures/
-│   │   ├── eda/static/                   # CP2A PNG figures
-│   │   ├── eda/repayment_status/         # CP2B1 PNG figures
-│   │   ├── eda/bill_amount/              # CP2B2A PNG figures
-│   │   ├── eda/payment_amount/           # CP2B2B1 PNG figures
-│   │   └── eda/bill_payment_relationship/# Phase 1 PNG figures
-│   └── tables/
-│       ├── eda/static/                   # CP2A CSV tables
-│       ├── eda/repayment_status/         # CP2B1 CSV tables
-│       ├── eda/bill_amount/              # CP2B2A CSV tables
-│       ├── eda/payment_amount/           # CP2B2B1 CSV tables
-│       └── eda/bill_payment_relationship/# Phase 1 CSV tables
-├── scripts/
-│   ├── __init__.py
-│   ├── audit_dataset.py                  # CP1 dataset audit
-│   ├── run_eda_static.py                 # CP2A static feature EDA
-│   ├── run_eda_repayment_status.py       # CP2B1 temporal EDA
-│   ├── run_eda_bill_amount.py            # CP2B2A temporal EDA
-│   ├── run_eda_payment_amount.py         # CP2B2B1 temporal EDA
-│   └── run_eda_bill_payment_relationship.py # Phase 1 relationship EDA
-├── src/
-│   └── credit_default/                   # main project package
-│       ├── __init__.py
-│       ├── data_loader.py                # reusable data loading module
-│       └── eda/                          # EDA sub-package
-│           ├── __init__.py
-│           ├── figures.py                # CP2A figure generation
-│           ├── findings.py               # CP2A findings generation
-│           ├── static_features.py        # CP2A EDA calculations
-│           ├── repayment_status.py       # CP2B1 calculations
-│           ├── repayment_status_figures.py # CP2B1 figures
-│           ├── repayment_status_findings.py# CP2B1 findings
-│           ├── bill_amount.py            # CP2B2A calculations
-│           ├── bill_amount_figures.py    # CP2B2A figures
-│           ├── bill_amount_findings.py   # CP2B2A findings
-│           ├── payment_amount.py         # CP2B2B1 calculations
-│           ├── payment_amount_figures.py # CP2B2B1 figures
-│           ├── payment_amount_findings.py# CP2B2B1 findings
-│           ├── bill_payment_relationship.py # Phase 1 calculations
-│           ├── bill_payment_relationship_figures.py # Phase 1 figures
-│           └── bill_payment_relationship_findings.py # Phase 1 findings
-├── tests/
-│   ├── __init__.py
-│   ├── test_data_loader.py               # CP1 tests
-│   ├── test_eda_static.py                # CP2A tests
-│   ├── test_eda_repayment_status.py      # CP2B1 tests
-│   ├── test_eda_bill_amount.py           # CP2B2A tests
-│   ├── test_eda_payment_amount.py        # CP2B2B1 tests
-│   └── test_eda_bill_payment_relationship.py # Phase 1 tests
-├── .gitignore
-├── pyproject.toml
-├── requirements.txt
-└── README.md
-```
+**Baselines:**
+- Logistic Regression
+- Gradient Boosting
 
----
+**Recurrent:**
+- GRU Small
+- GRU Deep
+- LSTM Deep
 
-## Environment Setup
+**CNN:**
+- Conv1D Small
+- Conv1D Deep
+- Conv1D Multiscale
 
+## Development Results
+Based strictly on validation metrics, the following family winners were selected during Accelerated Phase 3:
+- **Baseline**: `logistic_regression`
+- **Recurrent**: `gru_deep`
+- **CNN**: `conv1d_multiscale`
+
+*Note: These are validation results, not final test results.*
+
+## Final Frozen-Test Results
+The final results evaluated precisely once on the test split at the validation-selected thresholds are as follows:
+
+| Model | Threshold | F1 | Precision | Recall | PR-AUC | ROC-AUC | Accuracy |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| logistic_regression | 0.545 | 0.5349 | 0.5304 | 0.5396 | 0.5285 | 0.7684 | 0.7925 |
+| gru_deep | 0.585 | 0.5386 | 0.5362 | 0.5411 | 0.5435 | 0.7804 | 0.7950 |
+| conv1d_multiscale | 0.615 | 0.5318 | 0.5258 | 0.5381 | 0.5247 | 0.7766 | 0.7905 |
+
+- `gru_deep` was selected as the primary candidate before test access.
+- Test results did not change that selection.
+- No post-test tuning occurred.
+- Threshold improvements over 0.5 were small.
+
+## Reproducibility
+Setup the environment:
 ```bash
-# 1. Create a virtual environment (recommended)
-python -m venv .venv
-
-# 2. Activate the environment
-# Windows PowerShell:
-.venv\Scripts\Activate.ps1
-# Linux / macOS:
-source .venv/bin/activate
-
-# 3. Install dependencies
-python -m pip install -r requirements.txt
-
-# 4. Install the project package in editable mode
-python -m pip install -e .
+python -m pip install -e ".[dev]"
 ```
 
----
-
-## Commands
-
-### Run the dataset audit (Checkpoint 1)
-
+Run the pipeline:
 ```bash
 python -m scripts.audit_dataset
-```
-
-### Run static feature EDA (Checkpoint 2A)
-
-```bash
 python -m scripts.run_eda_static
-```
-
-### Run temporal EDA (Checkpoint 2B1)
-
-```bash
 python -m scripts.run_eda_repayment_status
-```
-
-Outputs:
-- Tables: `reports/tables/eda/repayment_status/*.csv` (7 files)
-- Figures: `reports/figures/eda/repayment_status/*.png` (10 files)
-- Findings: `reports/eda_repayment_status_findings.md`
-
-### Run temporal EDA (Checkpoint 2B2A - Bill Amounts)
-
-```bash
 python -m scripts.run_eda_bill_amount
-```
-
-Outputs:
-- Tables: `reports/tables/eda/bill_amount/*.csv` (10 files)
-- Figures: `reports/figures/eda/bill_amount/*.png` (12 files)
-- Findings: `reports/eda_bill_amount_findings.md`
-
-### Run temporal EDA (Checkpoint 2B2B1 - Payment Amounts)
-
-```bash
 python -m scripts.run_eda_payment_amount
-```
-
-Outputs:
-- Tables: `reports/tables/eda/payment_amount/*.csv` (11 files)
-- Figures: `reports/figures/eda/payment_amount/*.png` (12 files)
-- Findings: `reports/eda_payment_amount_findings.md`
-
-### Run tests
-
-```bash
+python -m scripts.run_eda_bill_payment_relationship
+python -m scripts.prepare_model_data
+python -m scripts.run_phase3_experiments
+python -m scripts.run_phase4_evaluation
+python -m scripts.verify_final_artifacts
 python -m pytest tests/ -v
 ```
 
----
+**WARNING:**
+- Running Phase 3 retrains models.
+- Running Phase 4 normally must reuse the locked test predictions.
+- **Do not** use `--rerun-test-inference` after the final evaluation has been frozen.
 
-## Checkpoint Status
+## Project Structure
+- `src/credit_default/eda/`
+- `src/credit_default/preprocessing/`
+- `src/credit_default/experiments/`
+- `src/credit_default/evaluation/`
+- `scripts/`
+- `tests/`
+- `reports/`
+- `artifacts/`
 
-| Checkpoint | Description | Status |
-|-----------|-------------|--------|
-| 1 | Project Foundation & Raw Dataset Audit | ✅ Complete |
-| 1.1 | Correction: documentation accuracy, package layout | ✅ Complete |
-| 2A | Descriptive EDA — Target & Static Features | ✅ Complete |
-| 2A.2 | Correction: static EDA wording and tests | ✅ Complete |
-| 2B1 | Descriptive EDA — Temporal Features (PAY_x) | ✅ Complete |
-| 2B2A | Descriptive EDA — Temporal Features (BILL_AMTx) | ✅ Complete |
-| 2B2B1 | Descriptive EDA — Temporal Features (PAY_AMTx) | ✅ Complete |
-| 2B2B2 | Descriptive EDA — Relationships (BILL vs PAY) | ⬜ Not started |
-| 3 | Preprocessing & Feature Engineering | ⬜ Not started |
-| 4 | Traditional ML Baselines | ⬜ Not started |
-| 5 | Deep Learning (GRU / LSTM / Conv1D) | ⬜ Not started |
-| 6 | Evaluation & Final Report | ⬜ Not started |
+## Key Artifacts
+- **Split manifest**: `artifacts/preprocessing/split_manifest.json`
+- **Split lock**: `artifacts/preprocessing/split_lock.json`
+- **Preprocessing metadata**: `artifacts/preprocessing/metadata.json`
+- **Phase 3 results**: `reports/experiments/phase3/experiment_results.csv`
+- **Selected candidates**: `reports/experiments/phase3/selected_candidates.json`
+- **Threshold lock**: `artifacts/evaluation/phase4/threshold_lock.json`
+- **Final evaluation lock**: `artifacts/evaluation/phase4/final_evaluation_lock.json`
+- **Final test results**: `reports/evaluation/phase4/final_test_results.csv`
+- **Final model decision**: `reports/evaluation/phase4/final_model_decision.json`
 
-**Note**: Checkpoint 2B2B2 (BILL vs PAY relationship), preprocessing, splitting, and modelling have not started.
+## Limitations
+- This model is based on one public dataset.
+- The temporal observation window is strictly limited to a six-month historical period.
+- There is a large class imbalance in defaults.
+- There is no external behavioral, socio-economic, or macroeconomic data.
+- Moderate final PR-AUC shows predictive limitations using this data alone.
+- Neural models only slightly outperform or closely match the linear baseline.
+- Results should not be interpreted causally.
 
----
-
-## Known Data Issues for Future Checkpoints
-
-### Duplicate feature vectors (Checkpoint 3)
-
-Checkpoint 1 identified 35 duplicate rows when ID was excluded from the
-comparison. Because the target was still included, this does not yet establish
-the number of predictor-only duplicate groups. Before splitting, Checkpoint 3
-will group rows using all predictive features while excluding both ID and the
-target, identify groups with consistent or conflicting targets, and prevent
-identical predictor groups from crossing dataset boundaries.
-
-### Undocumented categorical values
-
-EDUCATION values `0`, `5`, `6` and MARRIAGE value `0` are present in the raw
-dataset but are **not explicitly defined** by the official UCI documentation.
-They have not been removed or recoded; any future preprocessing must decide
-how to handle them.
-
-The treatment of raw codes 0 and -2 during preprocessing remains unresolved.
-Future checkpoints should compare defensible representations while preserving
-the raw values and documenting any transformation.
-
----
-
-## License
-
-This project is for educational purposes.  
-The dataset is provided by the UCI Machine Learning Repository under their terms of use.
+## Next Deliverables
+- Final academic report
+- Presentation slides
+- Reproducibility package
+- Defence preparation

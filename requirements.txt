@@ -1,12 +1,9 @@
-# ============================================================
-# Checkpoint 1: Project Foundation & Raw Dataset Audit
-# ============================================================
-pandas>=2.0
-xlrd>=2.0
-numpy>=1.24
-pytest>=7.0
-
-# ============================================================
-# Checkpoint 2A: Static Feature EDA
-# ============================================================
-matplotlib>=3.7
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+joblib
+torch
+xlrd
+pytest

@@ -118,7 +118,8 @@ def main():
     plot_val_vs_test(results_df, t_lock)
     write_findings(results_df, t_lock, primary_candidate)
     
-    checks_df = check_quality(predictions_df, results_df, True)
+    is_valid = verify_locks()
+    checks_df = check_quality(predictions_df, results_df, is_valid)
     checks_df.to_csv("reports/evaluation/phase4/phase4_quality_checks.csv", index=False)
     
     import sklearn

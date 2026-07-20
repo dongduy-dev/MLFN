@@ -71,3 +71,20 @@ def test_test_loader_isolation():
         
         # Check exactly one test loader call
         mock_load.assert_called_once_with("test")
+
+def test_verify_locks_missing():
+    from credit_default.evaluation.locking import verify_locks
+    with patch("pathlib.Path.exists", return_value=False):
+        assert not verify_locks()
+
+def test_verify_locks_corrupt_threshold_lock():
+    from credit_default.evaluation.locking import verify_locks
+    with patch("pathlib.Path.exists", return_value=True):
+        with patch("builtins.open") as mock_open:
+            import json
+            # Provide an invalid SHA
+            mock_open.return_value.__enter__.return_value.read.side_effect = [
+                json.dumps({"complete_lock_SHA": "wrong", "models": {}}),
+            ]
+            with pytest.raises(ValueError, match="Corrupted threshold_lock.json"):
+                verify_locks()

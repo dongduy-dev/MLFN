@@ -97,16 +97,52 @@ def verify_locks():
     with open(t_lock_path, "r") as f:
         t_lock = json.load(f)
     
-    # verify complete_lock_SHA
-    expected_sha = t_lock.pop("complete_lock_SHA")
+    expected_t_sha = t_lock.pop("complete_lock_SHA", None)
     t_json = json.dumps(t_lock, indent=2, sort_keys=True)
-    if hashlib.sha256(t_json.encode('utf-8')).hexdigest() != expected_sha:
+    if hashlib.sha256(t_json.encode('utf-8')).hexdigest() != expected_t_sha:
         raise ValueError("Corrupted threshold_lock.json!")
         
     with open(e_lock_path, "r") as f:
         e_lock = json.load(f)
         
-    if get_file_sha256(preds_path) != e_lock["final_test_prediction_file_SHA"]:
+    if e_lock.get("threshold_lock_SHA") != expected_t_sha:
+        raise ValueError("Evaluation lock does not link to threshold lock!")
+        
+    if get_file_sha256(preds_path) != e_lock.get("final_test_prediction_file_SHA"):
         raise ValueError("Corrupted final_test_predictions.csv!")
+        
+    if e_lock.get("checkpoint_SHAs") != EXPECTED_SHAS:
+        raise ValueError("Evaluation lock checkpoint SHAs mismatch!")
+        
+    import pandas as pd
+    import numpy as np
+    df_preds = pd.read_csv(preds_path)
+    
+    id_sha = hashlib.sha256(df_preds["ID"].values.tobytes()).hexdigest()
+    target_sha = hashlib.sha256(df_preds["y_true"].values.tobytes()).hexdigest()
+    
+    if id_sha != e_lock.get("test_ID_population_SHA"):
+        raise ValueError("ID population SHA mismatch!")
+    if target_sha != e_lock.get("test_target_population_SHA"):
+        raise ValueError("Target population SHA mismatch!")
+        
+    if len(df_preds) != e_lock.get("exact_row_counts", {}).get("total") or len(df_preds) != 18000:
+        raise ValueError("Exact total row count mismatch!")
+        
+    counts = df_preds.groupby("model_name").size()
+    if not (counts == 6000).all() or not (counts == e_lock.get("exact_row_counts", {}).get("per_model")).all():
+        raise ValueError("Exact per-model row count mismatch!")
+        
+    ids_lr = df_preds[df_preds["model_name"] == "logistic_regression"]["ID"].values
+    ids_gru = df_preds[df_preds["model_name"] == "gru_deep"]["ID"].values
+    ids_cnn = df_preds[df_preds["model_name"] == "conv1d_multiscale"]["ID"].values
+    if not (np.array_equal(ids_lr, ids_gru) and np.array_equal(ids_gru, ids_cnn)):
+        raise ValueError("Identical ID population across models mismatch!")
+        
+    t_lr = df_preds[df_preds["model_name"] == "logistic_regression"]["y_true"].values
+    t_gru = df_preds[df_preds["model_name"] == "gru_deep"]["y_true"].values
+    t_cnn = df_preds[df_preds["model_name"] == "conv1d_multiscale"]["y_true"].values
+    if not (np.array_equal(t_lr, t_gru) and np.array_equal(t_gru, t_cnn)):
+        raise ValueError("Identical target population across models mismatch!")
         
     return True

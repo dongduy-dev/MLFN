@@ -115,16 +115,19 @@ def plot_default_rate_by_status_and_month(
     dist_month: pd.DataFrame,
     out_dir: Path
 ) -> Path:
-    """4. Default rate by status code and month."""
-    fig, ax = plt.subplots(figsize=FIGSIZE_WIDE)
+    """4. Default rate by status code and month (12 small multiples)."""
+    codes = sorted(KNOWN_STATUS_CODES)
+    fig, axes = plt.subplots(3, 4, figsize=(16, 12), sharex=True, sharey=True)
+    axes = axes.flatten()
     
-    for code in sorted(KNOWN_STATUS_CODES):
+    for idx, code in enumerate(codes):
+        ax = axes[idx]
         sub = dist_month[dist_month["raw_status_value"] == code].sort_values("chronological_month_index")
+        style = get_status_style(code)
         
-        # Only plot where observed_combination is True
+        # Plot observed combination
         sub_obs = sub[sub["observed_combination"]]
         if not sub_obs.empty:
-            style = get_status_style(code)
             ax.plot(
                 sub_obs["month"], 
                 sub_obs["default_rate"] * 100, 
@@ -137,36 +140,48 @@ def plot_default_rate_by_status_and_month(
             # Annotate small n
             for _, row in sub_obs.iterrows():
                 if row["small_sample_warning"]:
-                    # Draw a distinct circle around the marker to highlight it
                     ax.plot(
                         row["month"], 
                         row["default_rate"] * 100, 
                         marker='o', 
-                        markersize=12,
+                        markersize=14,
                         markerfacecolor='none',
                         markeredgecolor='red',
                         alpha=0.8
                     )
-                    # Annotate text
+                    
+                    # Prevent clipping by placing text slightly above or below bounds dynamically
+                    y_val = row["default_rate"] * 100
+                    y_offset = -15 if y_val > 80 else 15
+                    
                     ax.annotate(
                         f"n={int(row['total_count'])}",
-                        (row["month"], row["default_rate"] * 100),
-                        xytext=(0, 10),
+                        (row["month"], y_val),
+                        xytext=(0, y_offset),
                         textcoords='offset points',
                         ha='center',
-                        va='bottom',
+                        va='center',
                         fontsize=8,
                         color='red',
-                        bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="red", alpha=0.8)
+                        bbox=dict(boxstyle="round,pad=0.1", fc="white", ec="none", alpha=0.7)
                     )
+        
+        # Mark unobserved with X
+        sub_unobs = sub[~sub["observed_combination"]]
+        for _, row in sub_unobs.iterrows():
+            ax.plot(row["month"], 0, marker='x', color='gray', markersize=8)
+            ax.annotate("X", (row["month"], 5), ha="center", color="gray", fontsize=8)
             
-    ax.set_title("Default Rate by Status Code and Month", fontsize=12)
-    ax.set_ylabel("Default Rate (%)")
-    ax.set_ylim(bottom=0)
-    ax.legend(title="Raw Status", bbox_to_anchor=(1.05, 1), loc='upper left')
-    ax.text(1.05, 0.5, "Red hollow markers & labels\nindicate n < 200 (interpret cautiously)", 
-            transform=ax.transAxes, color="red", fontsize=9, va='center')
-    ax.spines[["top", "right"]].set_visible(False)
+        ax.set_title(f"Status {code}", fontsize=10)
+        ax.set_ylim(0, 105)
+        ax.set_yticks([0, 20, 40, 60, 80, 100])
+        ax.spines[["top", "right"]].set_visible(False)
+        ax.tick_params(axis='x', rotation=45)
+            
+    fig.suptitle("Default Rate by Status Code and Month", fontsize=14, y=0.98)
+    fig.text(0.5, -0.02, "n < 200 indicates the project caution threshold; interpret cautiously. Gray X = Unobserved.", 
+             ha="center", fontsize=10, color="red")
+    
     fig.tight_layout()
     path = out_dir / "4_default_rate_by_status.png"
     fig.savefig(path, dpi=DPI, bbox_inches="tight")
@@ -262,11 +277,11 @@ def plot_default_rate_heatmap(
                 # Indicate small n
                 ax.text(j, i, "n<200", ha="center", va="center", color="red", fontsize=8, fontweight="bold")
                 
-    ax.text(1.05, 0.5, "X = Unobserved\nn<200 = Interpret cautiously", 
-            transform=ax.transAxes, color="black", fontsize=9, va='center')
-    fig.tight_layout()
+    fig.text(0.5, 0.02, "X = unobserved combination. Red 'n<200' indicates the project caution threshold; interpret cautiously.", 
+             ha="center", fontsize=9)
+    fig.tight_layout(rect=[0, 0.05, 1, 1])
     path = out_dir / "6_default_rate_heatmap.png"
-    fig.savefig(path, dpi=DPI)
+    fig.savefig(path, dpi=DPI, bbox_inches="tight")
     plt.close(fig)
     return path
 

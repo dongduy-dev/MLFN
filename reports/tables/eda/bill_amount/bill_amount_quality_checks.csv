@@ -1,0 +1,32 @@
+check_name,passed,details
+exact_chronology,True,All required columns exist in exact order
+chronological_mapping,True,Chronological order strictly mapped
+dataset_size,True,"30,000 rows"
+monthly_count_total,True,"Every month has 30,000 count"
+target_group_sum,True,Target groups sum to 30000 per month
+sign_total_sum,True,Sign counts sum to 30000
+sign_percentage_sum,True,Sign percentages sum to ~100%
+target_sign_count_reconciliation,True,Target sign sums valid
+target_sign_percentage_totals,True,Target sign pct approx 100
+default_plus_nondefault_reconciliation,True,Sum matches total
+default_rates_bounds,True,"Default rates in [0, 1]"
+iqr_non_negative,True,IQR >= 0
+fences_calculation,True,Both fences match 1.5 IQR formula
+potential_extreme_counts_recomputed,True,Recomputed potential extreme counts
+change_counts,True,"Changes contain 30,000"
+change_target_sum,True,"Target changes sum to 30,000"
+change_sign_sum,True,Neg+Zero+Pos change equals total
+change_percentage_totals,True,Change percentages sum to approx 100
+correlation_validity,True,"6x6, diag=1, symmetric"
+display_range_validity,True,Min < Max
+regression_anchor_april_overall,True,April exact known values match
+regression_anchor_september_overall,True,September exact known values match
+regression_anchor_target_medians,True,Target group known medians match
+regression_anchor_september_sign,True,September sign counts match
+display_range_reconciliation,True,Per-month exactly reconciles to global
+regression_anchor_display_range,True,Display range 180k known values match
+regression_anchor_display_range_per_month,True,Display range per month match
+regression_anchor_adjacent_medians_zero,True,All overall median changes are zero
+regression_anchor_aug_sep_change,True,Aug->Sep change counts match
+exact_expected_raw_sha256,True,SHA-256 remains exact
+deterministic_repeated_calculations,True,Repeated calculation is identical

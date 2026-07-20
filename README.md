@@ -126,6 +126,17 @@ Outputs:
 - Figures: `reports/figures/eda/repayment_status/*.png` (10 files)
 - Findings: `reports/eda_repayment_status_findings.md`
 
+### Run temporal EDA (Checkpoint 2B2A - Bill Amounts)
+
+```bash
+python -m scripts.run_eda_bill_amount
+```
+
+Outputs:
+- Tables: `reports/tables/eda/bill_amount/*.csv` (10 files)
+- Figures: `reports/figures/eda/bill_amount/*.png` (12 files)
+- Findings: `reports/eda_bill_amount_findings.md`
+
 ### Run tests
 
 ```bash
@@ -143,13 +154,14 @@ python -m pytest tests/ -v
 | 2A | Descriptive EDA — Target & Static Features | ✅ Complete |
 | 2A.2 | Correction: static EDA wording and tests | ✅ Complete |
 | 2B1 | Descriptive EDA — Temporal Features (PAY_x) | ✅ Complete |
-| 2B2 | Descriptive EDA — Temporal Features (BILL_AMTx, PAY_AMTx) | ⬜ Not started |
+| 2B2A | Descriptive EDA — Temporal Features (BILL_AMTx) | ✅ Complete |
+| 2B2B | Descriptive EDA — Temporal Features (PAY_AMTx) | ⬜ Not started |
 | 3 | Preprocessing & Feature Engineering | ⬜ Not started |
 | 4 | Traditional ML Baselines | ⬜ Not started |
 | 5 | Deep Learning (GRU / LSTM / Conv1D) | ⬜ Not started |
 | 6 | Evaluation & Final Report | ⬜ Not started |
 
-**Note**: Checkpoint 2B2 (bill amounts and payment amounts), preprocessing, splitting, and modelling have not started.
+**Note**: Checkpoint 2B2B (payment amounts), preprocessing, splitting, and modelling have not started.
 
 ---
 

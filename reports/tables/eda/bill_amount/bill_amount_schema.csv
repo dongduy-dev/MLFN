@@ -1,0 +1,7 @@
+chronological_index,month,raw_column,expected_present,actual_present,dtype,documentation_note
+1,April,BILL_AMT6,True,True,int64,Approved chronological mapping
+2,May,BILL_AMT5,True,True,int64,Approved chronological mapping
+3,June,BILL_AMT4,True,True,int64,Approved chronological mapping
+4,July,BILL_AMT3,True,True,int64,Approved chronological mapping
+5,August,BILL_AMT2,True,True,int64,Approved chronological mapping
+6,September,BILL_AMT1,True,True,int64,Approved chronological mapping

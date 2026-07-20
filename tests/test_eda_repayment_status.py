@@ -210,6 +210,62 @@ class TestFigures:
         # Ensure 12 unique styles
         unique_styles = set(tuple(s.items()) for s in styles)
         assert len(unique_styles) == 12
+        
+    def test_default_rate_small_multiples(self, df: pd.DataFrame, monkeypatch, tmp_path: Path) -> None:
+        import matplotlib.pyplot as plt
+        from credit_default.eda.repayment_status_figures import plot_default_rate_by_status_and_month
+        dist_month = compute_status_distribution_by_month(df)
+        
+        captured_figs = []
+        original_savefig = plt.Figure.savefig
+        
+        def mock_savefig(self_fig, *args, **kwargs):
+            captured_figs.append(self_fig)
+            original_savefig(self_fig, *args, **kwargs)
+            
+        monkeypatch.setattr(plt.Figure, "savefig", mock_savefig)
+        
+        path = plot_default_rate_by_status_and_month(dist_month, tmp_path)
+        assert path.exists()
+        
+        assert len(captured_figs) == 1
+        fig = captured_figs[0]
+        
+        # 12 axes + maybe some others for colorbars/text, but subplot axes have get_subplotspec
+        subplot_axes = [ax for ax in fig.axes if hasattr(ax, "get_subplotspec")]
+        assert len(subplot_axes) == 12
+        
+        titles = [ax.get_title() for ax in subplot_axes]
+        from credit_default.eda.repayment_status import KNOWN_STATUS_CODES
+        for code in KNOWN_STATUS_CODES:
+            assert f"Status {code}" in titles
+            
+        for ax in subplot_axes:
+            ymin, ymax = ax.get_ylim()
+            assert ymin <= 0.0
+            assert ymax >= 100.0
+            
+    def test_heatmap_footnote_exists(self, df: pd.DataFrame, monkeypatch, tmp_path: Path) -> None:
+        import matplotlib.pyplot as plt
+        from credit_default.eda.repayment_status_figures import plot_default_rate_heatmap
+        dist_month = compute_status_distribution_by_month(df)
+        
+        captured_figs = []
+        original_savefig = plt.Figure.savefig
+        def mock_savefig(self_fig, *args, **kwargs):
+            captured_figs.append(self_fig)
+            original_savefig(self_fig, *args, **kwargs)
+            
+        monkeypatch.setattr(plt.Figure, "savefig", mock_savefig)
+        plot_default_rate_heatmap(dist_month, tmp_path)
+        
+        assert len(captured_figs) == 1
+        fig = captured_figs[0]
+        
+        # Check that fig texts contain our footnote
+        texts = [t.get_text() for t in fig.texts]
+        found = any("project caution threshold" in t for t in texts)
+        assert found
 
 
 class TestFindings:

@@ -2,7 +2,7 @@
 
 **Course**: Machine Learning Final Project  
 **Dataset**: [UCI — Default of Credit Card Clients](https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients)  
-**Current Checkpoint**: **2A — Descriptive EDA (Target & Static Features)**
+**Current Checkpoint**: **2B1 — Temporal EDA (Repayment Status)**
 
 ---
 
@@ -16,7 +16,7 @@ Future checkpoints will explore traditional ML baselines (Logistic Regression,
 Random Forest, XGBoost) and deep-learning architectures (GRU, LSTM, Conv1D).
 
 > **No preprocessing, data splitting, feature selection, or model training
-> has been performed. Checkpoint 2A is descriptive EDA only.**
+> has been performed. Checkpoint 2B1 is descriptive temporal EDA only.**
 
 ---
 
@@ -43,28 +43,35 @@ MLFN/
 │       └── default of credit card clients.xls
 ├── reports/
 │   ├── eda_static_findings.md            # CP2A human-readable findings
+│   ├── eda_repayment_status_findings.md  # CP2B1 human-readable findings
 │   ├── figures/
-│   │   └── eda/static/                  # CP2A PNG figures (11 files)
+│   │   ├── eda/static/                  # CP2A PNG figures
+│   │   └── eda/repayment_status/        # CP2B1 PNG figures (10 files)
 │   └── tables/
-│       ├── eda/static/                  # CP2A CSV tables (6 files)
-│       └── *.csv                        # CP1 audit tables
+│       ├── eda/static/                  # CP2A CSV tables
+│       └── eda/repayment_status/        # CP2B1 CSV tables (7 files)
 ├── scripts/
 │   ├── __init__.py
 │   ├── audit_dataset.py                 # CP1 dataset audit
-│   └── run_eda_static.py               # CP2A static feature EDA
+│   ├── run_eda_static.py               # CP2A static feature EDA
+│   └── run_eda_repayment_status.py     # CP2B1 temporal EDA
 ├── src/
 │   └── credit_default/                  # main project package
 │       ├── __init__.py
 │       ├── data_loader.py              # reusable data loading module
 │       └── eda/                        # EDA sub-package
 │           ├── __init__.py
-│           ├── figures.py              # figure generation
-│           ├── findings.py             # findings markdown generation
-│           └── static_features.py     # EDA calculations
+│           ├── figures.py              # CP2A figure generation
+│           ├── findings.py             # CP2A findings generation
+│           ├── static_features.py     # CP2A EDA calculations
+│           ├── repayment_status.py         # CP2B1 calculations
+│           ├── repayment_status_figures.py # CP2B1 figures
+│           └── repayment_status_findings.py# CP2B1 findings
 ├── tests/
 │   ├── __init__.py
 │   ├── test_data_loader.py             # CP1 tests
-│   └── test_eda_static.py             # CP2A tests
+│   ├── test_eda_static.py             # CP2A tests
+│   └── test_eda_repayment_status.py   # CP2B1 tests
 ├── .gitignore
 ├── pyproject.toml
 ├── requirements.txt
@@ -108,10 +115,16 @@ python -m scripts.audit_dataset
 python -m scripts.run_eda_static
 ```
 
+### Run temporal EDA (Checkpoint 2B1)
+
+```bash
+python -m scripts.run_eda_repayment_status
+```
+
 Outputs:
-- Tables: `reports/tables/eda/static/*.csv` (6 files)
-- Figures: `reports/figures/eda/static/*.png` (11 files)
-- Findings: `reports/eda_static_findings.md`
+- Tables: `reports/tables/eda/repayment_status/*.csv` (7 files)
+- Figures: `reports/figures/eda/repayment_status/*.png` (10 files)
+- Findings: `reports/eda_repayment_status_findings.md`
 
 ### Run tests
 
@@ -128,11 +141,15 @@ python -m pytest tests/ -v
 | 1 | Project Foundation & Raw Dataset Audit | ✅ Complete |
 | 1.1 | Correction: documentation accuracy, package layout | ✅ Complete |
 | 2A | Descriptive EDA — Target & Static Features | ✅ Complete |
-| 2B | Descriptive EDA — Temporal Features (PAY_x, BILL_AMTx, PAY_AMTx) | ⬜ Not started |
+| 2A.2 | Correction: static EDA wording and tests | ✅ Complete |
+| 2B1 | Descriptive EDA — Temporal Features (PAY_x) | ✅ Complete |
+| 2B2 | Descriptive EDA — Temporal Features (BILL_AMTx, PAY_AMTx) | ⬜ Not started |
 | 3 | Preprocessing & Feature Engineering | ⬜ Not started |
 | 4 | Traditional ML Baselines | ⬜ Not started |
 | 5 | Deep Learning (GRU / LSTM / Conv1D) | ⬜ Not started |
 | 6 | Evaluation & Final Report | ⬜ Not started |
+
+**Note**: Checkpoint 2B2 (bill amounts and payment amounts), preprocessing, splitting, and modelling have not started.
 
 ---
 
@@ -153,6 +170,10 @@ EDUCATION values `0`, `5`, `6` and MARRIAGE value `0` are present in the raw
 dataset but are **not explicitly defined** by the official UCI documentation.
 They have not been removed or recoded; any future preprocessing must decide
 how to handle them.
+
+The treatment of raw codes 0 and -2 during preprocessing remains unresolved.
+Future checkpoints should compare defensible representations while preserving
+the raw values and documenting any transformation.
 
 ---
 

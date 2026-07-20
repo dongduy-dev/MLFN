@@ -1,0 +1,33 @@
+check_name,passed,detail
+dataset_size_30k,True,n=30000
+month_sum_30k_April,True,sum=30000
+month_sum_30k_May,True,sum=30000
+month_sum_30k_June,True,sum=30000
+month_sum_30k_July,True,sum=30000
+month_sum_30k_August,True,sum=30000
+month_sum_30k_September,True,sum=30000
+target_pct_sum_April_c0,True,sum=100.00
+target_pct_sum_April_c1,True,sum=100.00
+target_pct_sum_May_c0,True,sum=100.00
+target_pct_sum_May_c1,True,sum=100.00
+target_pct_sum_June_c0,True,sum=100.00
+target_pct_sum_June_c1,True,sum=100.00
+target_pct_sum_July_c0,True,sum=100.00
+target_pct_sum_July_c1,True,sum=100.00
+target_pct_sum_August_c0,True,sum=100.00
+target_pct_sum_August_c1,True,sum=100.00
+target_pct_sum_September_c0,True,sum=100.00
+target_pct_sum_September_c1,True,sum=100.00
+month_counts_add_up,True,True
+transition_counts_add_up,True,True
+pattern_counts_add_up,True,True
+transition_pair_0_sum_30k,True,sum=30000
+transition_pair_1_sum_30k,True,sum=30000
+transition_pair_2_sum_30k,True,sum=30000
+transition_pair_3_sum_30k,True,sum=30000
+transition_pair_4_sum_30k,True,sum=30000
+month_default_rates_valid,True,"Rates in [0,1]"
+pattern_sum_30k,True,sum=30000
+sequence_len_6,True,All patterns have 6 elements
+undocumented_codes_present,True,"codes={np.int64(0), np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(8), np.int64(9), np.int64(-1), np.int64(-2)}"
+raw_file_sha256_unchanged,True,SHA matches.

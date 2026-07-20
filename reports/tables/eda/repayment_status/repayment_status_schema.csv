@@ -1,0 +1,8 @@
+chronological_index,month,raw_column,expected_present,actual_present,documentation_note
+1,April,PAY_6,True,True,Approved chronological mapping
+2,May,PAY_5,True,True,Approved chronological mapping
+3,June,PAY_4,True,True,Approved chronological mapping
+4,July,PAY_3,True,True,Approved chronological mapping
+5,August,PAY_2,True,True,Approved chronological mapping
+6,September,PAY_0,True,True,Approved chronological mapping
+7,N/A,PAY_1,False,False,Expected to be absent

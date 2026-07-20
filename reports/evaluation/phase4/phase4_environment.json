@@ -1,0 +1,7 @@
+{
+  "device": "cpu",
+  "torch_version": "2.13.0+cpu",
+  "scikit_learn_version": "1.8.0",
+  "numpy_version": "2.3.3",
+  "pandas_version": "2.3.3"
+}

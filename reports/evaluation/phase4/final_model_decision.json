@@ -1,0 +1,20 @@
+{
+  "primary_candidate_selected_from_validation": "gru_deep",
+  "validation_selected_threshold": 0.5849999999999997,
+  "validation_ranking_evidence": {
+    "default_f1": 0.5585081585081585,
+    "default_recall": 0.564030131826742,
+    "default_precision": 0.5530932594644506,
+    "roc_auc": 0.7924642982881612,
+    "pr_auc": 0.5721972535162797
+  },
+  "final_test_metrics": {
+    "default_f1": 0.5386346586646662,
+    "pr_auc": 0.5434619342072208,
+    "default_recall": 0.5410700828937453,
+    "default_precision": 0.5362210604929052
+  },
+  "descriptive_test_ranking": "gru_deep > logistic_regression > conv1d_multiscale",
+  "statement_no_alteration": "Test results did not alter the preselection.",
+  "statement_no_tuning": "No post-test tuning occurred."
+}

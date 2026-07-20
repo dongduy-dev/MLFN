@@ -1,0 +1,7 @@
+check,passed
+locks_valid,True
+total_rows_18000,True
+per_model_6000,True
+finite_probs,True
+six_result_rows,True
+confusion_sum_6000,True

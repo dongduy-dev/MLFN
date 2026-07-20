@@ -1,0 +1,18 @@
+{
+  "threshold_lock_SHA": "734605faf7b833e22fc4211465ee0b8d04fefe3173ecdd664283f69c196c24b3",
+  "final_test_prediction_file_SHA": "8d6d18c0b10e1bf4ca20693a322b1f3d1a6df11d89c5f31362a6bd05f0cd1f4d",
+  "test_ID_population_SHA": "52b5289c51d523abbc49665f11a92ee246683123967e58bc7b32f7fabc675ca0",
+  "test_target_population_SHA": "c9e79407f48cf41e1188845a5982ecf0a6bb2dc05808b4067075b691a73ab5c5",
+  "checkpoint_SHAs": {
+    "logistic_regression": "cff5103be4b14f6e189c100a55a6e1c82827ec7558bfc2fe70da9f33dbaba13f",
+    "gru_deep": "80ad92cae0c4cf49e749ba22b9938c306e3e377a3bc91be21a4ced16805c42e9",
+    "conv1d_multiscale": "862c633eb8c64e732faadc8bf2bcc85ce8e8c2b8214f7a7357fcbdb6ec716c53"
+  },
+  "inference_device": "cpu",
+  "inference_timestamp": "2026-07-20T14:35:07.661886",
+  "exact_row_counts": {
+    "total": 18000,
+    "per_model": 6000
+  },
+  "statement": "No retraining occurred. Test inference executed exactly once."
+}

@@ -1,0 +1,48 @@
+{
+  "creation_timestamp": "2026-07-20T14:35:07.417388",
+  "preprocessing_manifest_SHA": "860e1578ed82fd9cb87aeed49a64c621c401d4f41376f1544f72cea93389cdd1",
+  "phase3_validation_prediction_SHA": "ddc0a8999d927c05345a38f68c8f4e947c01de859beb058045b11b9d038ac178",
+  "selected_candidates_file_SHA": "b965aafa24b547934f09ac5ce949506a7451b1dd70e63b7dc63dc6773a43887f",
+  "checkpoint_SHAs": {
+    "logistic_regression": "cff5103be4b14f6e189c100a55a6e1c82827ec7558bfc2fe70da9f33dbaba13f",
+    "gru_deep": "80ad92cae0c4cf49e749ba22b9938c306e3e377a3bc91be21a4ced16805c42e9",
+    "conv1d_multiscale": "862c633eb8c64e732faadc8bf2bcc85ce8e8c2b8214f7a7357fcbdb6ec716c53"
+  },
+  "threshold_grid_definition": "0.050 to 0.950 inclusive by 0.005",
+  "primary_candidate": "gru_deep",
+  "threshold_selection_rules": "1. highest default F1; 2. highest recall; 3. highest precision; 4. closest to 0.500; 5. lower threshold",
+  "primary_candidate_selection_rules": "1. selected-threshold default F1; 2. PR-AUC; 3. selected-threshold recall; 4. lower model complexity; 5. alphabetical",
+  "models": {
+    "logistic_regression": {
+      "selected_threshold": 0.5449999999999998,
+      "validation_metrics": {
+        "default_f1": 0.5581835383159887,
+        "default_recall": 0.5555555555555556,
+        "default_precision": 0.5608365019011406,
+        "roc_auc": 0.7795379944384255,
+        "pr_auc": 0.5585047766732416
+      }
+    },
+    "gru_deep": {
+      "selected_threshold": 0.5849999999999997,
+      "validation_metrics": {
+        "default_f1": 0.5585081585081585,
+        "default_recall": 0.564030131826742,
+        "default_precision": 0.5530932594644506,
+        "roc_auc": 0.7924642982881612,
+        "pr_auc": 0.5721972535162797
+      }
+    },
+    "conv1d_multiscale": {
+      "selected_threshold": 0.6149999999999998,
+      "validation_metrics": {
+        "default_f1": 0.5529357374017568,
+        "default_recall": 0.5630885122410546,
+        "default_precision": 0.5431425976385105,
+        "roc_auc": 0.7890584509287508,
+        "pr_auc": 0.5546579872786375
+      }
+    }
+  },
+  "complete_lock_SHA": "734605faf7b833e22fc4211465ee0b8d04fefe3173ecdd664283f69c196c24b3"
+}

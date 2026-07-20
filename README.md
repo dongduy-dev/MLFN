@@ -15,7 +15,15 @@ using the UCI "Default of Credit Card Clients" dataset (30,000 records,
 Future checkpoints will explore traditional ML baselines (Logistic Regression,
 Random Forest, XGBoost) and deep-learning architectures (GRU, LSTM, Conv1D).
 
-> **EDA is complete. Train/validation/test membership is frozen. Preprocessors are fitted only on training rows. Final test data has not been used for model selection or evaluation. No model has been trained. Accelerated Phase 3 will train traditional baselines, GRU/LSTM, and Conv1D configurations using train and validation only.**
+### Current Phase
+Accelerated Phase 4 — Frozen-Test Evaluation
+
+### State
+- EDA, splitting, preprocessing, and development experiments are complete;
+- thresholds and the primary candidate were selected using validation only;
+- the three family candidates were evaluated once on the frozen test split;
+- no post-test tuning occurred;
+- next phase creates the final report, presentation, reproducibility package, and defence material.
 
 ---
 

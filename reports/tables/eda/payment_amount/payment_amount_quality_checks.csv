@@ -1,0 +1,26 @@
+check_name,passed,details
+exact_chronology,True,All required columns exist in exact order
+chronological_mapping,True,Chronological order strictly mapped
+dataset_size,True,"30,000 rows"
+monthly_counts_30000,True,Every monthly overall count equals 30000
+target_counts_reconcile,True,Target counts sum to 30000
+sign_counts_reconcile,True,Sign counts sum to 30000
+sign_percentage_sum,True,Sign percentages sum to ~100%
+target_sign_count_reconciliation,True,Target sign sums valid
+target_sign_percentage_totals,True,Target sign pct approx 100
+default_plus_nondefault_reconciliation,True,Sum matches total
+default_rates_bounds,True,"Default rates in [0, 1]"
+iqr_non_negative,True,IQR >= 0
+fences_calculation,True,Both fences match 1.5 IQR formula
+potential_extreme_counts_recomputed,True,Recomputed potential extreme counts
+change_counts_30000,True,Adjacent changes exactly 30000
+change_target_counts_reconcile,True,Change target counts sum to 30000
+change_sign_sum,True,Neg+Zero+Pos change equals total
+change_percentage_totals,True,Change percentages sum to approx 100
+no_percentage_change,True,No percentage change columns exist
+correlation_matrix_valid,True,"6x6, symmetric, diag=1"
+display_range_reconciliation,True,Per-month exactly reconciles to global
+display_range_validity,True,180k global pop and valid range
+regression_anchors_pass,True,All independent pandas regression anchors passed
+exact_expected_raw_sha256,True,SHA-256 remains exact
+deterministic_repeated_calculations,True,Repeated calculation is identical

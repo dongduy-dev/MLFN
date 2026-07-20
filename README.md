@@ -2,7 +2,7 @@
 
 **Course**: Machine Learning Final Project  
 **Dataset**: [UCI — Default of Credit Card Clients](https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients)  
-**Current Checkpoint**: **2B1 — Temporal EDA (Repayment Status)**
+**Current Checkpoint**: **2B2B1 — Previous-Payment Amount Temporal EDA**
 
 ---
 
@@ -15,8 +15,10 @@ using the UCI "Default of Credit Card Clients" dataset (30,000 records,
 Future checkpoints will explore traditional ML baselines (Logistic Regression,
 Random Forest, XGBoost) and deep-learning architectures (GRU, LSTM, Conv1D).
 
-> **No preprocessing, data splitting, feature selection, or model training
-> has been performed. Checkpoint 2B1 is descriptive temporal EDA only.**
+> **No preprocessing, dataset splitting, feature selection, or model training has
+> been performed. Exploratory analysis is complete for static features,
+> repayment statuses, bill amounts, and previous-payment amounts.
+> BILL_AMT/PAY_AMT relationship analysis is deferred to Checkpoint 2B2B2.**
 
 ---
 
@@ -44,34 +46,50 @@ MLFN/
 ├── reports/
 │   ├── eda_static_findings.md            # CP2A human-readable findings
 │   ├── eda_repayment_status_findings.md  # CP2B1 human-readable findings
+│   ├── eda_bill_amount_findings.md       # CP2B2A human-readable findings
+│   ├── eda_payment_amount_findings.md    # CP2B2B1 human-readable findings
 │   ├── figures/
-│   │   ├── eda/static/                  # CP2A PNG figures
-│   │   └── eda/repayment_status/        # CP2B1 PNG figures (10 files)
+│   │   ├── eda/static/                   # CP2A PNG figures
+│   │   ├── eda/repayment_status/         # CP2B1 PNG figures
+│   │   ├── eda/bill_amount/              # CP2B2A PNG figures
+│   │   └── eda/payment_amount/           # CP2B2B1 PNG figures
 │   └── tables/
-│       ├── eda/static/                  # CP2A CSV tables
-│       └── eda/repayment_status/        # CP2B1 CSV tables (7 files)
+│       ├── eda/static/                   # CP2A CSV tables
+│       ├── eda/repayment_status/         # CP2B1 CSV tables
+│       ├── eda/bill_amount/              # CP2B2A CSV tables
+│       └── eda/payment_amount/           # CP2B2B1 CSV tables
 ├── scripts/
 │   ├── __init__.py
-│   ├── audit_dataset.py                 # CP1 dataset audit
-│   ├── run_eda_static.py               # CP2A static feature EDA
-│   └── run_eda_repayment_status.py     # CP2B1 temporal EDA
+│   ├── audit_dataset.py                  # CP1 dataset audit
+│   ├── run_eda_static.py                 # CP2A static feature EDA
+│   ├── run_eda_repayment_status.py       # CP2B1 temporal EDA
+│   ├── run_eda_bill_amount.py            # CP2B2A temporal EDA
+│   └── run_eda_payment_amount.py         # CP2B2B1 temporal EDA
 ├── src/
-│   └── credit_default/                  # main project package
+│   └── credit_default/                   # main project package
 │       ├── __init__.py
-│       ├── data_loader.py              # reusable data loading module
-│       └── eda/                        # EDA sub-package
+│       ├── data_loader.py                # reusable data loading module
+│       └── eda/                          # EDA sub-package
 │           ├── __init__.py
-│           ├── figures.py              # CP2A figure generation
-│           ├── findings.py             # CP2A findings generation
-│           ├── static_features.py     # CP2A EDA calculations
-│           ├── repayment_status.py         # CP2B1 calculations
+│           ├── figures.py                # CP2A figure generation
+│           ├── findings.py               # CP2A findings generation
+│           ├── static_features.py        # CP2A EDA calculations
+│           ├── repayment_status.py       # CP2B1 calculations
 │           ├── repayment_status_figures.py # CP2B1 figures
-│           └── repayment_status_findings.py# CP2B1 findings
+│           ├── repayment_status_findings.py# CP2B1 findings
+│           ├── bill_amount.py            # CP2B2A calculations
+│           ├── bill_amount_figures.py    # CP2B2A figures
+│           ├── bill_amount_findings.py   # CP2B2A findings
+│           ├── payment_amount.py         # CP2B2B1 calculations
+│           ├── payment_amount_figures.py # CP2B2B1 figures
+│           └── payment_amount_findings.py# CP2B2B1 findings
 ├── tests/
 │   ├── __init__.py
-│   ├── test_data_loader.py             # CP1 tests
-│   ├── test_eda_static.py             # CP2A tests
-│   └── test_eda_repayment_status.py   # CP2B1 tests
+│   ├── test_data_loader.py               # CP1 tests
+│   ├── test_eda_static.py                # CP2A tests
+│   ├── test_eda_repayment_status.py      # CP2B1 tests
+│   ├── test_eda_bill_amount.py           # CP2B2A tests
+│   └── test_eda_payment_amount.py        # CP2B2B1 tests
 ├── .gitignore
 ├── pyproject.toml
 ├── requirements.txt
@@ -137,6 +155,17 @@ Outputs:
 - Figures: `reports/figures/eda/bill_amount/*.png` (12 files)
 - Findings: `reports/eda_bill_amount_findings.md`
 
+### Run temporal EDA (Checkpoint 2B2B1 - Payment Amounts)
+
+```bash
+python -m scripts.run_eda_payment_amount
+```
+
+Outputs:
+- Tables: `reports/tables/eda/payment_amount/*.csv` (11 files)
+- Figures: `reports/figures/eda/payment_amount/*.png` (12 files)
+- Findings: `reports/eda_payment_amount_findings.md`
+
 ### Run tests
 
 ```bash
@@ -155,13 +184,14 @@ python -m pytest tests/ -v
 | 2A.2 | Correction: static EDA wording and tests | ✅ Complete |
 | 2B1 | Descriptive EDA — Temporal Features (PAY_x) | ✅ Complete |
 | 2B2A | Descriptive EDA — Temporal Features (BILL_AMTx) | ✅ Complete |
-| 2B2B | Descriptive EDA — Temporal Features (PAY_AMTx) | ⬜ Not started |
+| 2B2B1 | Descriptive EDA — Temporal Features (PAY_AMTx) | ✅ Complete |
+| 2B2B2 | Descriptive EDA — Relationships (BILL vs PAY) | ⬜ Not started |
 | 3 | Preprocessing & Feature Engineering | ⬜ Not started |
 | 4 | Traditional ML Baselines | ⬜ Not started |
 | 5 | Deep Learning (GRU / LSTM / Conv1D) | ⬜ Not started |
 | 6 | Evaluation & Final Report | ⬜ Not started |
 
-**Note**: Checkpoint 2B2B (payment amounts), preprocessing, splitting, and modelling have not started.
+**Note**: Checkpoint 2B2B2 (BILL vs PAY relationship), preprocessing, splitting, and modelling have not started.
 
 ---
 

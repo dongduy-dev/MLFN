@@ -1,0 +1,7 @@
+chronological_index,month,raw_column,expected_present,actual_present,dtype,documentation_note
+1,April,PAY_AMT6,True,True,int64,Previous payment amount (NT dollar)
+2,May,PAY_AMT5,True,True,int64,Previous payment amount (NT dollar)
+3,June,PAY_AMT4,True,True,int64,Previous payment amount (NT dollar)
+4,July,PAY_AMT3,True,True,int64,Previous payment amount (NT dollar)
+5,August,PAY_AMT2,True,True,int64,Previous payment amount (NT dollar)
+6,September,PAY_AMT1,True,True,int64,Previous payment amount (NT dollar)

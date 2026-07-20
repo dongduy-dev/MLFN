@@ -1,0 +1,34 @@
+[
+  {
+    "name": "logistic_regression",
+    "family": "baseline"
+  },
+  {
+    "name": "gradient_boosting",
+    "family": "baseline"
+  },
+  {
+    "name": "gru_small",
+    "family": "recurrent"
+  },
+  {
+    "name": "gru_deep",
+    "family": "recurrent"
+  },
+  {
+    "name": "lstm_deep",
+    "family": "recurrent"
+  },
+  {
+    "name": "conv1d_small",
+    "family": "cnn"
+  },
+  {
+    "name": "conv1d_deep",
+    "family": "cnn"
+  },
+  {
+    "name": "conv1d_multiscale",
+    "family": "cnn"
+  }
+]

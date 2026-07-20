@@ -1,0 +1,44 @@
+[
+  {
+    "family": "baseline",
+    "model_name": "logistic_regression",
+    "validation_metrics": {
+      "default_f1": 0.5452127659574468,
+      "pr_auc": 0.5585047766732416,
+      "roc_auc": 0.7795379944384255,
+      "default_recall": 0.5790960451977402
+    },
+    "checkpoint_path": "artifacts\\models\\phase3\\logistic_regression.joblib",
+    "checkpoint_SHA-256": "cff5103be4b14f6e189c100a55a6e1c82827ec7558bfc2fe70da9f33dbaba13f",
+    "configuration": "{\"solver\": \"lbfgs\", \"regularization\": \"l2\", \"C\": 1.0, \"iteration_count\": 266, \"convergence_status\": \"converged\"}",
+    "selection_rule": "Highest default-class F1 at threshold 0.5 among baseline models"
+  },
+  {
+    "family": "recurrent",
+    "model_name": "gru_deep",
+    "validation_metrics": {
+      "default_f1": 0.5414881184261784,
+      "pr_auc": 0.5721972535162797,
+      "roc_auc": 0.7924642982881612,
+      "default_recall": 0.6544256120527306
+    },
+    "checkpoint_path": "artifacts\\models\\phase3\\gru_deep.pt",
+    "checkpoint_SHA-256": "80ad92cae0c4cf49e749ba22b9938c306e3e377a3bc91be21a4ced16805c42e9",
+    "configuration": "{\"optimizer\": \"AdamW\", \"learning_rate\": 0.001, \"weight_decay\": 0.0001, \"batch_size\": 256, \"maximum_epochs\": 50, \"early_stopping_patience\": 7, \"early_stopping_min_delta\": 0.0001, \"gradient_clipping_max_norm\": 5.0}",
+    "selection_rule": "Highest default-class F1 at threshold 0.5 among recurrent models"
+  },
+  {
+    "family": "cnn",
+    "model_name": "conv1d_multiscale",
+    "validation_metrics": {
+      "default_f1": 0.5404323458767014,
+      "pr_auc": 0.5546579872786375,
+      "roc_auc": 0.7890584509287508,
+      "default_recall": 0.635593220338983
+    },
+    "checkpoint_path": "artifacts\\models\\phase3\\conv1d_multiscale.pt",
+    "checkpoint_SHA-256": "862c633eb8c64e732faadc8bf2bcc85ce8e8c2b8214f7a7357fcbdb6ec716c53",
+    "configuration": "{\"optimizer\": \"AdamW\", \"learning_rate\": 0.001, \"weight_decay\": 0.0001, \"batch_size\": 256, \"maximum_epochs\": 50, \"early_stopping_patience\": 7, \"early_stopping_min_delta\": 0.0001, \"gradient_clipping_max_norm\": 5.0}",
+    "selection_rule": "Highest default-class F1 at threshold 0.5 among CNN models"
+  }
+]

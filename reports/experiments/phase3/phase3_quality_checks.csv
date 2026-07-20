@@ -1,0 +1,7 @@
+check,passed
+eight_models,True
+exact_prediction_counts,True
+valid_probabilities,True
+binary_predictions,True
+candidate_families,True
+metrics_recomputable,True

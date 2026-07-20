@@ -1,0 +1,3 @@
+scope,rows_involved,duplicate_rows_excl_first
+all_columns_including_ID,0,0
+all_columns_excluding_ID,70,35

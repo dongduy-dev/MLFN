@@ -1,0 +1,17 @@
+column,value,count,note
+EDUCATION,0,14,Present in raw dataset but not explicitly defined by official UCI documentation
+EDUCATION,5,280,Present in raw dataset but not explicitly defined by official UCI documentation
+EDUCATION,6,51,Present in raw dataset but not explicitly defined by official UCI documentation
+MARRIAGE,0,54,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_0,-2,2759,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_0,0,14737,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_2,-2,3782,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_2,0,15730,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_3,-2,4085,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_3,0,15764,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_4,-2,4348,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_4,0,16455,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_5,-2,4546,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_5,0,16947,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_6,-2,4895,Present in raw dataset but not explicitly defined by official UCI documentation
+PAY_6,0,16286,Present in raw dataset but not explicitly defined by official UCI documentation

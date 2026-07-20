@@ -3,9 +3,6 @@
 ## Project Overview
 This is an experimental project focused on predicting credit card defaults using the UCI Default of Credit Card Clients dataset. The dataset contains 30,000 observations with a binary prediction target and consists of tabular features along with a six-month ordered history of repayment statuses, bill amounts, and payment amounts.
 
-## Final Project Status
-All technical implementation is complete. The final report and presentation are next. No post-test tuning occurred.
-
 ## Scientific Workflow
 1. Immutable raw-data audit.
 2. Static and temporal EDA.

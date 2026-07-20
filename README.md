@@ -141,9 +141,3 @@ python -m pytest tests/ -v
 - Moderate final PR-AUC shows predictive limitations using this data alone.
 - Neural models only slightly outperform or closely match the linear baseline.
 - Results should not be interpreted causally.
-
-## Next Deliverables
-- Final academic report
-- Presentation slides
-- Reproducibility package
-- Defence preparation

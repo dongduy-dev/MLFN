@@ -2,7 +2,7 @@
 
 **Course**: Machine Learning Final Project  
 **Dataset**: [UCI — Default of Credit Card Clients](https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients)  
-**Current Checkpoint**: **2B2B1 — Previous-Payment Amount Temporal EDA**
+**Current Checkpoint**: **Accelerated Phase 1 — Bill/Payment Relationship EDA**
 
 ---
 
@@ -15,10 +15,7 @@ using the UCI "Default of Credit Card Clients" dataset (30,000 records,
 Future checkpoints will explore traditional ML baselines (Logistic Regression,
 Random Forest, XGBoost) and deep-learning architectures (GRU, LSTM, Conv1D).
 
-> **No preprocessing, dataset splitting, feature selection, or model training has
-> been performed. Exploratory analysis is complete for static features,
-> repayment statuses, bill amounts, and previous-payment amounts.
-> BILL_AMT/PAY_AMT relationship analysis is deferred to Checkpoint 2B2B2.**
+> **EDA is complete after this phase. Leakage-safe dataset splitting and preprocessing are next. No model training has occurred.**
 
 ---
 
@@ -48,23 +45,27 @@ MLFN/
 │   ├── eda_repayment_status_findings.md  # CP2B1 human-readable findings
 │   ├── eda_bill_amount_findings.md       # CP2B2A human-readable findings
 │   ├── eda_payment_amount_findings.md    # CP2B2B1 human-readable findings
+│   ├── eda_bill_payment_relationship_findings.md # Phase 1 relationship findings
 │   ├── figures/
 │   │   ├── eda/static/                   # CP2A PNG figures
 │   │   ├── eda/repayment_status/         # CP2B1 PNG figures
 │   │   ├── eda/bill_amount/              # CP2B2A PNG figures
-│   │   └── eda/payment_amount/           # CP2B2B1 PNG figures
+│   │   ├── eda/payment_amount/           # CP2B2B1 PNG figures
+│   │   └── eda/bill_payment_relationship/# Phase 1 PNG figures
 │   └── tables/
 │       ├── eda/static/                   # CP2A CSV tables
 │       ├── eda/repayment_status/         # CP2B1 CSV tables
 │       ├── eda/bill_amount/              # CP2B2A CSV tables
-│       └── eda/payment_amount/           # CP2B2B1 CSV tables
+│       ├── eda/payment_amount/           # CP2B2B1 CSV tables
+│       └── eda/bill_payment_relationship/# Phase 1 CSV tables
 ├── scripts/
 │   ├── __init__.py
 │   ├── audit_dataset.py                  # CP1 dataset audit
 │   ├── run_eda_static.py                 # CP2A static feature EDA
 │   ├── run_eda_repayment_status.py       # CP2B1 temporal EDA
 │   ├── run_eda_bill_amount.py            # CP2B2A temporal EDA
-│   └── run_eda_payment_amount.py         # CP2B2B1 temporal EDA
+│   ├── run_eda_payment_amount.py         # CP2B2B1 temporal EDA
+│   └── run_eda_bill_payment_relationship.py # Phase 1 relationship EDA
 ├── src/
 │   └── credit_default/                   # main project package
 │       ├── __init__.py
@@ -82,14 +83,18 @@ MLFN/
 │           ├── bill_amount_findings.py   # CP2B2A findings
 │           ├── payment_amount.py         # CP2B2B1 calculations
 │           ├── payment_amount_figures.py # CP2B2B1 figures
-│           └── payment_amount_findings.py# CP2B2B1 findings
+│           ├── payment_amount_findings.py# CP2B2B1 findings
+│           ├── bill_payment_relationship.py # Phase 1 calculations
+│           ├── bill_payment_relationship_figures.py # Phase 1 figures
+│           └── bill_payment_relationship_findings.py # Phase 1 findings
 ├── tests/
 │   ├── __init__.py
 │   ├── test_data_loader.py               # CP1 tests
 │   ├── test_eda_static.py                # CP2A tests
 │   ├── test_eda_repayment_status.py      # CP2B1 tests
 │   ├── test_eda_bill_amount.py           # CP2B2A tests
-│   └── test_eda_payment_amount.py        # CP2B2B1 tests
+│   ├── test_eda_payment_amount.py        # CP2B2B1 tests
+│   └── test_eda_bill_payment_relationship.py # Phase 1 tests
 ├── .gitignore
 ├── pyproject.toml
 ├── requirements.txt

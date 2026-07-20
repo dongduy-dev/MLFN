@@ -1,0 +1,7 @@
+chronological_index,month,bill_column,payment_column,bill_present,payment_present,bill_dtype,payment_dtype,pairing_note
+1,April,BILL_AMT6,PAY_AMT6,True,True,int64,int64,same-index monthly bill and previous-payment amount pairs
+2,May,BILL_AMT5,PAY_AMT5,True,True,int64,int64,same-index monthly bill and previous-payment amount pairs
+3,June,BILL_AMT4,PAY_AMT4,True,True,int64,int64,same-index monthly bill and previous-payment amount pairs
+4,July,BILL_AMT3,PAY_AMT3,True,True,int64,int64,same-index monthly bill and previous-payment amount pairs
+5,August,BILL_AMT2,PAY_AMT2,True,True,int64,int64,same-index monthly bill and previous-payment amount pairs
+6,September,BILL_AMT1,PAY_AMT1,True,True,int64,int64,same-index monthly bill and previous-payment amount pairs

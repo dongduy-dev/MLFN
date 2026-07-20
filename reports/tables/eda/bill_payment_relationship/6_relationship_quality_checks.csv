@@ -1,0 +1,16 @@
+check_name,passed,details
+exact_six_pair_chronology,True,6 chronological pairs validated
+monthly_observations_30000,True,"30,000 per month"
+target_counts_reconcile,True,Targets sum to 30000
+category_counts_reconcile,True,Categories sum to 30000
+default_plus_nondefault_equals_total,True,Matches
+percentages_sum_100,True,approx 100%
+default_rates_in_bounds,True,"Rates in [0,1]"
+ratio_summary_counts_reconcile,True,Eligible + Ineligible = 30000
+ratio_eligibility_matches_positive_bill,True,Matched
+no_infinite_ratios,True,No inf max ratios
+no_negative_payment_values,True,No negative PAY_AMT
+correlations_finite,True,Correlations finite
+regression_anchors_pass,True,All anchor checks passed
+exact_expected_raw_sha256,True,SHA-256 intact
+deterministic_repeated_calculations,True,Deterministic outputs
